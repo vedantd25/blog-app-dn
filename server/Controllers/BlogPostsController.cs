@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using BlogApp.Models;
-using BlogApp.Services;
+using System.Security.Claims;
+
 
 namespace BlogApp.Controllers;
 
@@ -9,72 +11,69 @@ namespace BlogApp.Controllers;
 [Route("api/[controller]")]
 public class BlogPostsController : ControllerBase
 {
-    private readonly IBlogPostService _blogPostService;
+    private readonly ApplicationDbContext _context;
 
-    public BlogPostsController(IBlogPostService blogPostService)
+    public BlogPostsController(ApplicationDbContext context)
     {
-        _blogPostService = blogPostService;
+        _context = context;
     }
 
-    // Public - Get all blog posts
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        return Ok(_blogPostService.GetAll());
+        var posts = await _context.BlogPosts.ToListAsync();
+        return Ok(posts);
     }
 
-    // Public - Get a single blog post by ID
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public async Task<IActionResult> GetById(int id)
     {
-        var post = _blogPostService.GetById(id);
-        return post is null ? NotFound() : Ok(post);
+        var post = await _context.BlogPosts.FindAsync(id);
+        return post == null ? NotFound() : Ok(post);
     }
 
-    // Protected - Create new blog post
     [HttpPost]
-    [Authorize]
-    public IActionResult Create(BlogPost post)
+    //[Authorize]
+    public async Task<IActionResult> Create([FromBody] BlogPost post)
     {
-        var email = User.Identity?.Name;
-        post.AuthorEmail = email!;
-        _blogPostService.Create(post);
+        post.AuthorEmail = "v@gmail.com";
+        _context.BlogPosts.Add(post);
+        await _context.SaveChangesAsync();
         return Ok(post);
     }
 
-    // Protected - Update a blog post
     [HttpPut("{id}")]
     [Authorize]
-    public IActionResult Update(int id, BlogPost post)
+    public async Task<IActionResult> Update(int id, [FromBody] BlogPost post)
     {
-        var existing = _blogPostService.GetById(id);
-        if (existing == null)
-            return NotFound();
+        var existing = await _context.BlogPosts.FindAsync(id);
+        if (existing == null) return NotFound();
 
-        var email = User.Identity?.Name;
+        var email = User.FindFirst(ClaimTypes.Name)?.Value;
         if (existing.AuthorEmail != email)
             return Forbid("You can only update your own posts.");
 
-        post.Id = id;
-        post.AuthorEmail = email!;
-        _blogPostService.Update(post);
-        return Ok(post);
+        existing.Title = post.Title;
+        existing.Content = post.Content;
+        await _context.SaveChangesAsync();
+
+        return Ok(existing);
     }
 
-    // Protected - Delete a blog post
     [HttpDelete("{id}")]
     [Authorize]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var existing = _blogPostService.GetById(id);
-        if (existing == null)
-            return NotFound();
+        var existing = await _context.BlogPosts.FindAsync(id);
+        if (existing == null) return NotFound();
 
         var email = User.Identity?.Name;
         if (existing.AuthorEmail != email)
             return Forbid("You can only delete your own posts.");
 
-        _blogPostService.Delete(id);
+        _context.BlogPosts.Remove(existing);
+        await _context.SaveChangesAsync();
+
         return Ok("Post deleted.");
     }
 }
