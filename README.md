@@ -15,4 +15,6 @@ A full-featured blogging platform built using **React** for the frontend and **A
 - 🛢️ SQLite database via **Entity Framework Core**
 - 📡 RESTful communication using **Axios**
 
-https://github.com/vedantd25/blog-app-dn/blob/2580143f9fe16f95417d5f79d298ccf67b477ec4/Screenshot%20(72).png
+![image alt](https://github.com/vedantd25/blog-app-dn/blob/2580143f9fe16f95417d5f79d298ccf67b477ec4/Screenshot%20(72).png)
+
+
