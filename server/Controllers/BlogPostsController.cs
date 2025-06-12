@@ -25,6 +25,14 @@ public class BlogPostsController : ControllerBase
         return Ok(posts);
     }
 
+    [HttpGet("search/{searchTerm}")]
+public async Task<IActionResult> SearchByTitle(string searchTerm)
+{
+    var posts = await _context.BlogPosts
+        .Where(p => p.Title.Contains(searchTerm))
+        .ToListAsync();
+    return posts.Any() ? Ok(posts) : NotFound();
+}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {

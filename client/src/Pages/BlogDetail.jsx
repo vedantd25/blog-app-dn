@@ -106,7 +106,7 @@ export default function BlogDetail() {
             {/* Back Navigation */}
             <div style={styles.navigation}>
                 <button style={styles.backButton} onClick={goBack}>
-                    <span style={styles.backIcon}>?</span>
+                    
                     <span>Back to Articles</span>
                 </button>
             </div>
@@ -130,7 +130,7 @@ export default function BlogDetail() {
                             </div>
                         </div>
                         <div style={styles.readTime}>
-                            <span style={styles.readTimeIcon}>??</span>
+                            
                             {estimatedReadTime} min read
                         </div>
                     </div>
@@ -160,11 +160,11 @@ export default function BlogDetail() {
                                     style={styles.editButton}
                                     onClick={() => navigate(`/edit-post/${post.id}`)}
                                 >
-                                    <span style={styles.buttonIcon}>??</span>
+                                    
                                     Edit Article
                                 </button>
                                 <button style={styles.deleteButton} onClick={deletePost}>
-                                    <span style={styles.buttonIcon}>???</span>
+                                    
                                     Delete Article
                                 </button>
                             </div>
@@ -179,7 +179,7 @@ export default function BlogDetail() {
                         Discover more amazing articles by exploring our blog collection.
                     </p>
                     <button style={styles.exploreButton} onClick={() => navigate('/')}>
-                        <span style={styles.buttonIcon}>??</span>
+                        
                         Explore More Articles
                     </button>
                 </div>

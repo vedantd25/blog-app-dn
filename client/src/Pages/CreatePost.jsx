@@ -129,7 +129,7 @@ export default function CreatePost() {
                 <div style={styles.sidebar}>
                     <div style={styles.tipsCard}>
                         <h3 style={styles.cardTitle}>
-                            <span style={styles.cardTitleIcon}>??</span>
+                            
                             Writing Tips
                         </h3>
                         <ul style={styles.tipsList}>
