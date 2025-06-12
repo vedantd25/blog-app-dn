@@ -8,7 +8,6 @@ A full-featured blogging platform built using **React** for the frontend and **A
 
 ## 📌 Features
 
-- 🔐 User Authentication with **JWT**
 - 📝 Create, View, and Delete Blog Posts
 - 👤 Only logged-in users can create/delete their posts
 - 💬 Clean UI built with **React**
