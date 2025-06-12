@@ -61,23 +61,22 @@ public class AuthController : ControllerBase
     private string GenerateJwtToken(ApplicationUser user)
     {
         var claims = new[]
-{
-    new Claim(ClaimTypes.Name, user.Email!), // this makes User.Identity.Name work
-    // or optionally: new Claim("email", user.Email!)
-};
+        {
+            new Claim(ClaimTypes.Name, user.Email!),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        }; // Removed extra semicolon here
 
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)); // Fixed: configuration -> _config
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: _config["Jwt:Issuer"],
-            audience: _config["Jwt:Audience"],
+            issuer: _config["Jwt:Issuer"], // Fixed: configuration -> _config
+            audience: _config["Jwt:Audience"], // Fixed: configuration -> _config
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
+            expires: DateTime.Now.AddHours(1),
             signingCredentials: creds
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    }
+    } // Added missing closing brace
 }

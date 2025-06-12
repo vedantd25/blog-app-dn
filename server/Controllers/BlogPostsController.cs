@@ -33,10 +33,10 @@ public class BlogPostsController : ControllerBase
     }
 
     [HttpPost]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] BlogPost post)
     {
-        post.AuthorEmail = "v@gmail.com";
+        post.AuthorEmail = User.Identity?.Name;
         _context.BlogPosts.Add(post);
         await _context.SaveChangesAsync();
         return Ok(post);
