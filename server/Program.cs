@@ -7,20 +7,20 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register services
+
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=app.db"));
 
-// ? Add Identity with SignInManager but configure for JWT
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// ? Configure Identity to not interfere with JWT
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    // Password settings
+   
     options.Password.RequireDigit = true;
     options.Password.RequiredLength = 6;
     options.Password.RequireNonAlphanumeric = false;
@@ -28,7 +28,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireLowercase = false;
 });
 
-// ? Disable automatic cookie redirect for APIs  
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Events.OnRedirectToLogin = context =>
@@ -43,7 +43,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
-// ? JWT setup with explicit default schemes
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -71,7 +70,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ? Add CORS policy
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -85,7 +84,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ? Swagger UI
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

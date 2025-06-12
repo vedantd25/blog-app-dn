@@ -64,19 +64,19 @@ public class AuthController : ControllerBase
         {
             new Claim(ClaimTypes.Name, user.Email!),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        }; // Removed extra semicolon here
+        }; 
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)); // Fixed: configuration -> _config
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)); 
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: _config["Jwt:Issuer"], // Fixed: configuration -> _config
-            audience: _config["Jwt:Audience"], // Fixed: configuration -> _config
+            issuer: _config["Jwt:Issuer"], 
+            audience: _config["Jwt:Audience"], 
             claims: claims,
             expires: DateTime.Now.AddHours(1),
             signingCredentials: creds
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    } // Added missing closing brace
+    } 
 }
