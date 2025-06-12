@@ -8,37 +8,66 @@ export default function Login() {
     const login = async () => {
         try {
             const res = await api.post('/auth/login', { email, password });
-            console.log('Full login response:', res);
-
-            const token = res.data.token;
-            if (token) {
-                localStorage.setItem('token', token);
-                alert('Login successful');
-            } else {
-                alert('Login failed: No token in response.');
-            }
+            localStorage.setItem('token', res.data.token);
+            alert('Login successful');
         } catch (err) {
-            console.error('Login error:', err.response?.data || err.message);
             alert('Login failed');
         }
     };
 
-
     return (
-        <div>
-            <h2>Login</h2>
+        <div style={styles.container}>
+            <h2 style={styles.heading}>Login</h2>
             <input
+                style={styles.input}
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
             <input
-                placeholder="Password"
+                style={styles.input}
                 type="password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={login}>Login</button>
+            <button style={styles.button} onClick={login}>Login</button>
         </div>
     );
 }
+
+const styles = {
+    container: {
+        maxWidth: '400px',
+        margin: '50px auto',
+        padding: '20px',
+        border: '1px solid #ccc',
+        borderRadius: '8px',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#fff'
+    },
+    heading: {
+        textAlign: 'center',
+        marginBottom: '20px',
+        fontSize: '24px',
+        color: '#333'
+    },
+    input: {
+        width: '100%',
+        padding: '10px',
+        marginBottom: '15px',
+        borderRadius: '4px',
+        border: '1px solid #ccc',
+        fontSize: '16px'
+    },
+    button: {
+        width: '100%',
+        padding: '12px',
+        backgroundColor: '#4CAF50',
+        color: '#fff',
+        fontSize: '16px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer'
+    }
+};

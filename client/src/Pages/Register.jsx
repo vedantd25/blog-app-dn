@@ -8,18 +8,65 @@ export default function Register() {
     const register = async () => {
         try {
             await api.post('/auth/register', { email, password });
-            alert('Registered successfully');
-        } catch {
+            alert('Registration successful');
+        } catch (err) {
             alert('Registration failed');
         }
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={register}>Register</button>
+        <div style={styles.container}>
+            <h2 style={styles.heading}>Register</h2>
+            <input
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+                style={styles.input}
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button style={styles.button} onClick={register}>Register</button>
         </div>
     );
 }
+
+const styles = {
+    container: {
+        maxWidth: '400px',
+        margin: '50px auto',
+        padding: '20px',
+        border: '1px solid #ccc',
+        borderRadius: '8px',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#fff'
+    },
+    heading: {
+        textAlign: 'center',
+        marginBottom: '20px',
+        fontSize: '24px',
+        color: '#333'
+    },
+    input: {
+        width: '100%',
+        padding: '10px',
+        marginBottom: '15px',
+        borderRadius: '4px',
+        border: '1px solid #ccc',
+        fontSize: '16px'
+    },
+    button: {
+        width: '100%',
+        padding: '12px',
+        backgroundColor: '#2196F3',
+        color: '#fff',
+        fontSize: '16px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer'
+    }
+};

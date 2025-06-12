@@ -1,21 +1,30 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import BlogList from './pages/BlogList';
-import CreatePost from './pages/CreatePost';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import CreatePost from './Pages/CreatePost';
+import ViewBlogs from './Pages/BlogList';
+import Navbar from './Pages/Navbar';
+import PrivateRoute from './Pages/PrivateRoute';
 
-export default function App() {
+function App() {
     return (
-        <BrowserRouter>
-            <nav>
-                <Link to="/">Posts</Link> | <Link to="/login">Login</Link> | <Link to="/register">Register</Link> | <Link to="/create">New Post</Link>
-            </nav>
+        <Router>
+            <Navbar />
             <Routes>
-                <Route path="/" element={<BlogList />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/create" element={<CreatePost />} />
+                <Route path="/" element={<ViewBlogs />} />
+                <Route
+                    path="/create"
+                    element={
+                        <PrivateRoute>
+                            <CreatePost />
+                        </PrivateRoute>
+                    }
+                />
             </Routes>
-        </BrowserRouter>
+        </Router>
     );
 }
+
+export default App;
