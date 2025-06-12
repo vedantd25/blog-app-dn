@@ -16,5 +16,7 @@ A full-featured blogging platform built using **React** for the frontend and **A
 - 📡 RESTful communication using **Axios**
 
 ![image alt](https://github.com/vedantd25/blog-app-dn/blob/2580143f9fe16f95417d5f79d298ccf67b477ec4/Screenshot%20(72).png)
-
-
+![image alt](https://github.com/vedantd25/blog-app-dn/blob/2580143f9fe16f95417d5f79d298ccf67b477ec4/Screenshot%20(74).png)
+![image alt](https://github.com/vedantd25/blog-app-dn/blob/2580143f9fe16f95417d5f79d298ccf67b477ec4/Screenshot%20(75).png)
+![image alt](https://github.com/vedantd25/blog-app-dn/blob/2580143f9fe16f95417d5f79d298ccf67b477ec4/Screenshot%20(76).png)
+![image alt](https://github.com/vedantd25/blog-app-dn/blob/2580143f9fe16f95417d5f79d298ccf67b477ec4/Screenshot%20(77).png)
